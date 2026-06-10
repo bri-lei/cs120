@@ -1,0 +1,136 @@
+<!-- Create a page called about_me.html to include information about yourself.  As a minimum include the following items:
+
+Your name in a heading 1 tag.
+A few sentences about a trip or getaway that you took in the past few years.
+A bulleted list of your 3 favorite pet names and what tyle of animal goes with each- for example: "A cat named Kiwi Strawberry"
+A link to the website of your favorite restaurant with a few lines about why it's your favorite.  Make sure the link opens in a new tab.
+Side note:  if your favorite restaurant does not have a website, this could be a good opportunity to offer them your newfound web skills!
+An image of your favorite food with a few lines talking about how you like to serve/eat it. 
+A table with 4 columns that contains the following data about 4 of your favorite books. For each book, data in each column to include:
+name of the book
+an image of the cover
+the author of the book
+a one or two-line summary of the book
+Create a form to let visitors sign a "guest book" - get the  get a user's first and last name, email, city and state. Use a <select> element to choose the state (5-6 states in your area is sufficient). Labels for form elements should be in a <label> tag. -->
+
+<!doctype html>
+<html>
+<meta name="about me" content="about me assignment for Tufts CS120.">
+<link rel="stylesheet" href="styles.css">
+<head>
+	<title>About me</title>
+</head>
+
+<body>
+	<h1>Brian Lei</h1>
+
+	<h2>A Recent Trip</h2>
+	<div class="picAndText"> <!-- within styles.css, I tested out the function of overflow:auto-->
+		<img src="images/family.jpg" height ="300" style="float: right; margin-left: 20px; border-radius: 4px;">
+		<p class="pagefont" style="margin-top: 0;">At the end of May 2026, I took my parents on a trip to Hawaii. This was the first vacation we took together in 6 years. We stayed in Oahu for four days and Maui for three. In Oahu, 
+			we hiked Koko Head Trail, shopped in Ala Moana and Wakiki Beach, did the Pearl Harbor tour, and did many of the popular touristy activities. In Maui, we spent the days exploring all
+			the beaches and local site seeing. Although we had a plethora of food options, we spent half of all meals having traditional Chinese food - my parents' comfort food. The one 
+			thing we couldn't resist - a classic steak dinner. </p>
+	</div>
+	<hr>
+
+	<h2>My Favorite Pet Names</h2>
+	<div class="pagefont">
+	<ul>
+		<li>A goldfish named Roger</li>
+		<li>A dachshund named Marnie</li>
+		<li>A hamster named Rammy</li>
+	</ul></div>
+
+	<hr>
+
+	<h2><a href="https://www.sukhnyc.com/" target="_blank">SUKH</a> - The Best Thai Restaurant in NYC (and my favorite restaurant)</h2>
+	<p class="pagefont">A haven of authentic Thai food. 
+		<br /> Unique interior design.
+		<br /> Attentive service. <br /> 
+		Personal top picks of food include: 
+		<ul class="pagefont">
+			<li>Appetizer - Hor Mok (Steamed Savory Curry Custard), Somtum Thai Kai Kem (Papaya Salad)</li>
+			<li>Main Dish - Panang Nuer (Short Rib Curry), Khao Tom Haeng (Crispy Porkbelly), Pla Tod Samun Prai (Fried Deboned Branzino)</li>
+			<li>Drinks - Thai Iced Tea</li>
+		</ul>
+	</p>
+
+	<hr>
+
+	<h2>My Comfort Food</h2>
+	<div class="picAndText">
+		<img src="images/chasiu.png" height ="300" style="float: left; margin-right: 20px; border-radius: 4px;">
+		<p class="pagefont" style="margin-top: 0;">Growing up in a Chinese household, char siu, a sweet BBQ glazed pork, was a staple protein dish. My family had either
+			bought it from a store or marinated and cooked it at home. The meat is juicy and tender on the outside and when cooked on an open  Served with rice, a side of vegetables, and a bowl of soup, this would always be my first choice.
+		</p>
+	</div>
+	
+	<hr>
+
+	<h2>My Favorite Books</h2>
+	<table class="pagefont" style="width: 100%; table-layout: fixed; border-collapse: collapse;" border = "1" cellpadding="4" cellspacing="5">
+		<tr>
+			<th>Name of Book</th>
+			<th>Image of Cover</th>
+			<th>Author</th>
+			<th>Summary</th>
+		</tr>
+		<tr>
+			<td><em>The Four Agreements: A Practical Guide to Personal Freedom</em></td>
+			<td class="image-center"><img src="images/fouragreements.jpg" class="book-cover"></td> <!--width: 100%; table-layout:"fixed"; border-collapse:"collapse"-->
+			<td>Don Miguel Ruiz</td>
+			<td>A self improvement book that covers four topics: 
+				<ul>
+					<li>Be Impeccable With Your Word.</li>
+					<li>Don't Take Anything Personally.</li>
+					<li>Don't Make Assumptions.</li>
+					<li>Always Do Your Best.</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><em>How to Win Friends and Influence People</em></td>
+			<td class="image-center"><img src="images/howtowinfriends.jpg" class="book-cover"></td>
+			<td>Dale Carnegie</td>
+			<td>A self improvement book that covers topics of building meaningful relationships, improving social skills, and increasing influence through effective communication</td>
+		</tr>
+		<tr>
+			<td><em>Project Hail Mary</em></td>
+			<td class="image-center"><img src="images/projecthailmary.jpg" class="book-cover"></td>
+			<td>Andy Weir</td>
+			<td>Ryland Grace, a scientist who wakes up on a spaceship, races against time to remember his past and save Earth against Astrophage—a microscopic threat consuming the sun's energy</td>
+		</tr>
+		<tr>
+			<td><em>The Buddha and the Borderline</em></td>
+			<td class="image-center"><img src="images/thebuddha.jpg" class="book-cover"></td>
+			<td>Kiera Van Gelder</td>
+			<td>A memoir that reflects on the struggles of living with Borderline Personality Disorder and the journey to recovery</td>
+		</tr>
+	</table>
+
+	<hr>
+
+	<div class="guestbox">
+	<h3>Guest book</h3>
+	<form action="#" method="get">
+	Please sign my guest book! <br /><br /> <!--I left out the 'for' state for the label tags since this isn't interfacing with client-side operations.-->
+	<label>First name:</label> <input type="text" name="first_name" id="first_name">
+	<label>Last name:</label> <input type="text" name="last_name" id="last_name"> <br />
+	<label>Email:</label> <input type="text" name="email" id="email"> <br />
+	<label>City:</label> <input type="text" name="city" id="city"> <br />
+	State (Select from these 6 states):
+		<select name="state">
+			<option value="CA">California</option>
+			<option value="CO">Colorado</option>
+			<option value="FL">Florida</option>
+			<option value="MA">Massachusetts</option>
+			<option value="NJ">New Jersey</option>
+			<option value="NY">New York</option>
+		</select>
+	<br /><br />
+	<input type="submit" value="Submit">
+	</form>
+	</div>
+</body>
+</html>

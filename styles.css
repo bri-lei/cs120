@@ -1,0 +1,15 @@
+h2 {font-family:cursive}
+.picAndText {overflow: auto; padding-bottom: 10px;}
+.pagefont {font-family: "Segoe UI",Roboto , sans-serif;}
+.book-cover {text-align:center; width: 60%; table-layout:"fixed"; border-collapse:"collapse"}
+.image-center {text-align: center}
+.guestbox {max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
