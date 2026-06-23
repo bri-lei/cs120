@@ -53,7 +53,7 @@ body {
     
     .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
     .left-col {max-width: 447px; margin-right: 5%}
-    .right-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 45%; padding: 6px 6px} 
+    .right-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 45%; max-width: 535px; padding: 6px 6px} 
     p {color:#faf9f9}
 }
 
@@ -65,7 +65,7 @@ body {
     padding-bottom: 20px;
     
     .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
-    .left-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 35%; padding: 6px 6px}
+    .left-col {background-color:#0b0a0a; border: 2px solid #faf9f9; max-width: 535px; width: 45%; padding: 6px 6px}
     .right-col {max-width: 535px; margin-left: 5%} 
     p {color:#faf9f9}
 }
