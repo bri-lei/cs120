@@ -64,9 +64,13 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     
-    .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
+    .left-col,.right-col {display: inline-block; vertical-align: middle; border: 2px solid #faf9f9; box-sizing: border-box}
     .left-col {background-color:#0b0a0a; border: 2px solid #faf9f9; max-width: 500px; width: 45%; padding: 6px 6px}
-    .right-col {max-width: 475px; margin-left: 5%} 
+    .right-col {
+        max-width: 475px; 
+        margin-left: 5%;
+        img{width: 100%; height: auto; display: block}
+    } 
     p {color:#faf9f9}
 }
 
