@@ -1,0 +1,125 @@
+html,body {margin: 0; height:100%; padding: 0; font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif"}
+
+body {
+    padding-top: 80px;
+    background-image: url('project1images/concertphoto.png'); 
+    background-size: cover;      
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    display: flex;
+    flex-direction: column;
+}
+
+.primarycontent {flex: 1}
+
+.nav {
+    position: fixed;
+    background-color: #0b0a0a;
+    padding-right: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    ul {list-style-type: none; text-align: right}
+    ul li {display:inline-block; padding: 4px 4px}
+    ul a {font-size: 22px; color: #faf9f9; text-decoration: none; padding: 4px 8px}
+    ul a:hover {color: #551A8B}
+}
+
+.intro {
+    max-width: 50%;
+    text-align: center;
+    margin: 60px auto;
+    color:#faf9f9;
+    padding: 20px;
+
+    h1 {font-size: 60px; background-color: #0b0a0a; border: 2px solid}
+    h2 {font-size: 22px; background-color: #0b0a0a; border: 2px solid; padding: 3px 3px}
+    h3 {font-size: 22px}
+    ul {list-style-type: none; padding: 0px}
+    ul li {display: inline-block; margin: 10px; background-color: #0b0a0a; border: 2px solid; padding: 4px 10px; }
+    ul a {color: #faf9f9; text-decoration: none}
+    ul a:hover {color: #551A8B}
+}
+
+
+.intro1 {
+    width: 100%; 
+    margin: 0 auto; 
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
+    .left-col {max-width: 447px; margin-right: 5%}
+    .right-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 45%; padding: 6px 6px} 
+    p {color:#faf9f9}
+}
+
+.intro2 {
+    width: 100%; 
+    margin: 0 auto; 
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
+    .left-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 45%; padding: 6px 6px}
+    .right-col {max-width: 535px; margin-left: 5%} 
+    p {color:#faf9f9}
+}
+
+footer {
+    background-color: #0b0a0a;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    color:#faf9f9;
+    text-align: center;
+    font-size: 15px;
+
+    .footertext{padding: 1px}
+}
+
+.memberintro {
+    width: 100%; 
+    height: auto;
+    margin: 0 auto; 
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+    
+    img {max-width: 250px; display: block; max-height: 342px}
+    .left-col,.right-col {display: inline-block; vertical-align: middle; background-color:#faf9f9; border: 2px solid #faf9f9;}
+    .left-col {margin-right: 10%}
+    .right-col {background-color:#0b0a0a; border: 2px solid #faf9f9; width: 45%; padding: 4px 4px} 
+    p {color:#faf9f9}
+}
+
+.contactform{
+    width: 40%; 
+    max-width: 700px;
+    height: auto;
+    margin: 0 auto; 
+    padding: 20px 20px 20px 20px;
+    background-color: #0b0a0a;
+    color: #faf9f9;
+    border: 2px solid #faf9f9;
+}
+
+.form-left-align,.form-right-align {display:inline-block; margin: 0; vertical-align: top; box-sizing: border-box;}
+.form-left-align{width: 30%; padding: 4px 4px}
+.form-right-align{padding: 4px 4px}
+
+textarea {width: 235%; resize: none; font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif"}
+
+table {		
+    width: 65%; 
+    height: auto;
+    margin: 60px auto; 
+    text-align: center;
+    /* padding: 20px 20px; */
+    background-color: #0b0a0a;
+    color: #faf9f9;
+    border: 2px solid #faf9f9;
+}
