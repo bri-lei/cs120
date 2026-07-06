@@ -1,0 +1,71 @@
+<!--Brian Lei Tufts CS120 Summer 2026-->
+<!--Using an API-->
+
+<!doctype html>
+<html>
+<head>
+<meta name="Using an API">
+</head>
+
+<body>
+	<div>
+		<h1>Using an API</h1>
+		<h2>5-Letter Words</h2>
+		<p>Fetch random 5-letter English words using wildcard query parameters (from Datamuse API). </p>
+		<button id="fetchWordsBtn">Get 5-Letter Words</button>
+	
+		<!--Hide results until button is clicked-->
+		<div id="resultsArea" style="display: none;">
+			<h3>Extracted Word Matches:</h3>
+			<ul>
+				<div id="wordList"></div>
+			</ul>
+		</div>
+	</div>
+	
+	<script>
+		// Wait for page to load, on button click, run load5LetterWords function
+		window.onload = function () {
+			let fetchWords = document.getElementById('fetchWordsBtn');
+			fetchWords.onclick = load5LetterWords;
+		}
+	
+		// function to pull words from datamuse API and print them onto the page in an unordered list
+		function load5LetterWords() {
+			// Used Datamuse API: https://www.datamuse.com/api/
+			// 'sp=?????' requests words exactly 5 letters long
+			// 'max=5' limits our pull to a specific number of records
+			const url = 'https://api.datamuse.com/words?sp=?????&max=40';
+	
+			// fetch from API (no api key required)
+			fetch(url)
+				// turn response into Javascript array object 
+				.then(response => {return response.json();})
+
+				// this .then waits to convert the api data into an array
+				.then(data => {
+					// grabs div html element 'wordList' and stores it in listContainer
+					const listContainer = document.getElementById('wordList');
+					
+					// clear listContainer on each button click
+					listContainer.innerHTML = '';
+	
+					// create an empty string to store html content for div 
+					words = "";
+					// using forEach, loop through the JSON array 
+					data.forEach(item => {
+						// append value of key "word" in li tag
+						words += "<li>" + item.word + "</li>";
+					});
+
+					// load 
+					document.getElementById("wordList").innerHTML = words;
+					// reveal the output container
+					document.getElementById('resultsArea').style.display = 'block';
+				})
+				// if error, print in console 
+				.catch(error => console.log(error));
+		}
+	</script>
+</body>
+</html>
