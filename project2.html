@@ -1,0 +1,296 @@
+<!--Brian Lei Tufts CS120 Summer 2026 Project 2-->
+
+<!doctype html>
+<html>
+<head>
+<meta name="Tufts CS120 Summer 2026 Project 2" content="Wordle">
+<link rel="stylesheet" href="project2_styles.css"> 
+<script>
+	// number of rows and columns in game
+	const rows = 6;
+	const columns = 5;
+	
+	// arrays of characters in keyboard
+	const row1Keys = ['q','w','e','r','t','y','u','i','o','p'];
+    const row2Keys = ['a','s','d','f','g','h','j','k','l'];
+    const row3Keys = ['z','x','c','v','b','n','m'];
+
+	// create variables to store the winning word, the current row, and a state for the game
+	let hiddenWord = "";
+	let currentRow = 0;
+
+	window.onload = function() {
+		// on page load, create the game board
+		createBoard();
+		// on page load, create the keyboard
+		createKeyboard();
+		// on page load, grab a random word from the datamuse API 
+		loadHiddenWord();
+	};
+
+	// function to create board 
+	function createBoard() {
+		let boardContainer = document.getElementById('game-board');
+		let boardHTML = ""; 
+		
+		for (let i = 0; i < rows; i++) {
+			boardHTML += createRow(i);
+		}
+		boardContainer.innerHTML = boardHTML;
+	}
+
+	// function to create keyboard
+    function createKeyboard() {
+        keyboardContainer = document.getElementById('keyboard');
+        let keyboardHTML = "";
+
+		// create a function to take row keys as a parameter and create each block as a div 
+        function buildRowHTML(keyArray) {
+            let html = `<div class="keyboard-row">`;
+            keyArray.forEach(function(letter) {
+                // Assign a unique structural ID to each key element wrapper so we can target it to change colors later
+                html += `<div class="key" id="${letter}">${letter}</div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        keyboardHTML += buildRowHTML(row1Keys);
+        keyboardHTML += buildRowHTML(row2Keys);
+        keyboardHTML += buildRowHTML(row3Keys);
+
+        keyboardContainer.innerHTML = keyboardHTML;
+    }
+
+	// function to create each row with formatting
+	function createRow(rowIndex) {
+		// create a container to display each row with inline formatting
+		let rowHTML = `<div id="row-${rowIndex}" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 5px;">`;
+
+		for (let colIndex = 0; colIndex < columns; colIndex++) {
+			// cell used for formatting; all other classes are identifiers
+			rowHTML += `<div class="cell col-${colIndex}" data-row="${rowIndex}" data-col="${colIndex}"></div>`;
+		}
+
+		rowHTML += `</div>`;
+		return rowHTML;
+	}
+
+	// function to fetch 40 random 5-letter words and picks one using Math.random
+	function loadHiddenWord() {
+		fetch('https://api.datamuse.com/words?sp=?????&max=40')
+			.then(response => response.json())
+			.then(wordArray => {
+				// use the Math.random function to assign a random number 
+				let randomIndex = Math.floor(Math.random() * wordArray.length);
+				
+				// datamuse returns an array with key value ie {word: "apple", score: xxx} }
+				hiddenWord = wordArray[randomIndex].word.toLowerCase();
+				
+				// log the word in console
+				console.log("Answer:", hiddenWord);
+				
+				// save the word in the hidden div upon winning or losing 
+				document.getElementById("hiddenWordText").innerHTML = hiddenWord;
+
+				// start the game
+				startGuess();
+			})
+			.catch(error => { // in the API does not work, load "jokes" and allow game to start
+				console.error(error);
+				hiddenWord = "jokes"; // use as test
+				console.log("Fallback Word Loaded:", hiddenWord);
+				startGuess();
+			});
+	}
+
+	// event handler function ran ONLY after word is selected from API
+	function startGuess() {
+		document.getElementById("submitGuess").onclick = function() {
+			// uppercase in the html is for visual purposes; convert to lower case 
+			let guess = document.getElementById("guessInput").value.toLowerCase();
+
+			// checks failure cases - one for if length of word is not 5, other checks for if digits between 0 to 9 are contained in word
+			if (guess.length !== 5) {
+				alert("This is not a 5 letter word");
+				return;
+			}
+			if (/\d/.test(guess)) {
+				alert("Numbers are not allowed - please enter letters only.");
+				return;
+			}
+
+			// pass word into cell formatting function
+			checkGuess(guess);
+
+			// check if guess is correct and end game
+			if (guess === hiddenWord) {
+				setTimeout(function() {
+					alert("You won!");
+					revealEndPanel(true);
+					let submitButton = document.getElementById("submitGuess");
+					submitButton.disabled = true;
+				}, 100);
+				return; 
+			}
+
+			// increment the row counter/tracker
+			currentRow++;
+
+			// clear the entry for next input
+			document.getElementById("guessInput").value = "";
+
+			// failure case 
+			if (currentRow >= rows) {
+				setTimeout(function() {
+					alert("Game over");
+					// reveal correct word and play again panel
+					revealEndPanel(false);
+				}, 100);
+			}
+		};
+
+		// on clicking "play again", reset game
+		document.getElementById("restartButton").onclick = resetGame;
+	}
+
+	// function for color coding the squares
+	function checkGuess(guess) {
+
+		// create an array of 5 values pre-populated with the default "grey"; use an array to store the appropriate CSS color
+		let assignedColors = new Array(columns).fill("grey");
+		
+		// create an empty key-value object to store letters of the correct word and their frequency 
+		let secretLetterPool = {}; // javascript object
+		for (let i = 0; i < hiddenWord.length; i++) {
+			let char = hiddenWord[i];
+			if (!secretLetterPool[char]) {
+				secretLetterPool[char] = 0;
+			}
+			secretLetterPool[char]++;
+		}
+
+		// if the character is in the correct spot, assign "green" and remove count from key-value object
+		for (let i = 0; i < columns; i++) {
+			if (guess[i] === hiddenWord[i]) {
+				assignedColors[i] = "green";
+				secretLetterPool[guess[i]]--; 
+			}
+		}
+
+		// check for remaining cases
+		for (let i = 0; i < columns; i++) {
+			// iterate to next index if "green"
+			if (assignedColors[i] === "green") {
+				continue;
+			}
+
+			let guessedLetter = guess[i];
+
+			// cover the case of yellow - only assign yellow if character exists in the key-value object and if the value is greater than 0
+			// secretLetterPool[guessedLetter] --> exists = non-zero; does not exist = returns 0 or undefined = false
+			if (secretLetterPool[guessedLetter] && secretLetterPool[guessedLetter] > 0) {
+				assignedColors[i] = "yellow";
+				secretLetterPool[guessedLetter]--; 
+			} else {
+				assignedColors[i] = "grey"; 
+			}
+		}
+
+		// in the final act, assign the values and colors to the appropriate blocks and in the keyboard
+		for (let i = 0; i < columns; i++) {
+			colorCell(currentRow, i, assignedColors[i], guess[i]);
+			keyboardKeyColor(guess[i], assignedColors[i]);
+		}
+	}
+
+	// function to identify the row and column using querySelector and assign the color CSS and the letter within the block; arrow function
+	colorCell = (row, col, color, letter) => {
+	// locate the div for the correct row and column 
+	const block = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+
+	if (block) {
+		// add class for CSS color formatting to div 
+		block.classList.add(color);
+		// add letter to div
+		block.innerHTML = letter; 
+	}
+	}
+
+	// assign keyboard colors
+    function keyboardKeyColor(letter, newColor) {
+        key = document.getElementById(`${letter}`);
+
+        // grab boolean for if key is green or yellow (from existing guesses)
+        let hasGreen = key.classList.contains('green');
+        let hasYellow = key.classList.contains('yellow');
+
+        // similar to wordle --> green remains green, green overwrites yellow, yellow overwrites grey
+        if (hasGreen) { // if green, do nothing
+            return; 
+        }
+        if (hasYellow && newColor === 'grey') { // if yellow, green can overwrite below but cannot be overwritten by grey 
+            return; 
+        }
+
+        // overwrite old colors and add new color
+        key.classList.remove('green');
+		key.classList.remove('yellow');
+		key.classList.remove('grey');
+        key.classList.add(newColor);
+    }
+
+	// function to reaveal the different panels 
+	function revealEndPanel(playerWon) {
+		const panel = document.getElementById("endGamePanel");
+		const answerReveal = document.getElementById("answerReveal");
+		
+		// reveal panel on losing or winning
+		panel.style.display = "block"; 
+		
+		// reveal correct word panel if false 
+		if (playerWon) {
+			answerReveal.style.display = "none";
+		} else {
+			answerReveal.style.display = "block"; 
+		}
+	}
+
+	// reset the game
+	function resetGame() {
+		let submitButton = document.getElementById("submitGuess");
+		// re-enable "Submit" button
+		submitButton.disabled = false;
+		currentRow = 0;
+		document.getElementById("endGamePanel").style.display = "none";
+		document.getElementById("guessInput").value = "";
+		createBoard();
+		createKeyboard();
+		loadHiddenWord();
+	}
+</script>
+</head>
+
+<body>
+
+<h1>Wordle Game</h1>
+<p>Please enter a 5 letter word.</p>
+
+<div style="text-align: center; margin-bottom: 25px;">
+	<input type="text" id="guessInput" maxlength="5" style="padding: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #787c7e; text-transform: uppercase; text-align: center;">
+	<button id="submitGuess" style="padding: 10px 20px; font-size: 16px; margin-left: 10px; border-radius: 4px; border: 1px solid #787c7e; font-weight: bold; cursor: pointer;">Submit</button>
+</div>
+
+<div id="game-board" style="max-width: 350px; margin: 0 auto;"></div>
+
+<div id="endGamePanel" style="display: none; text-align: center;">
+	<div id="answerReveal" style="color: #d9534f; margin-bottom: 15px; font-weight: bold; display: none;">
+		The correct word was: <span id="hiddenWordText" style="text-transform: uppercase; color: black;"></span>
+	</div>
+	<button id="restartButton" style="padding: 8px 20px; font-size: 14px; background-color: #e2e2e2; color: black; border: 1px solid #787c7e; border-radius: 4px; cursor: pointer; font-weight: bold;">Play Again</button>
+</div>
+
+<div id="keyboard"></div>
+
+</body>
+</html>

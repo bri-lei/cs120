@@ -1,0 +1,56 @@
+body,html {font-family: sans-serif}
+h1,p {text-align: center}
+.cell {
+    border: 2px solid #787c7e;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
+    /* added transition for smooth feel */
+    transition: background-color 0.3s, border-color 0.3s;
+}
+#keyboard {
+    max-width: 500px;
+    margin: 30px auto;
+}
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+.key {
+    background-color: #e2e2e2;
+    border-radius: 4px;
+    padding: 15px 0;
+    flex: 1;
+    min-width: 28px;
+    max-width: 40px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* class created for each color */
+.green {
+    background-color: #6aaa64 !important; 
+    border-color: #6aaa64 !important;
+}
+.yellow {
+    background-color: #c9b458 !important; 
+    border-color: #c9b458 !important;
+}
+.grey {
+    background-color: #787c7e !important; 
+    border-color: #787c7e !important;
+}
+.white {
+    background-color: #ffffff !important; 
+    color: #121212 !important;
+    border-color: #ffffff !important;
+}
